@@ -24,12 +24,48 @@
     color: #a1a1a1;
     font-size: 1.1rem;
   }
+  #supabase-status {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    background: #151515;
+    border: 1px solid #262626;
+    font-size: 0.95rem;
+    color: #6ee7a5;
+  }
+  #supabase-status.error {
+    color: #f28b82;
+  }
 </style>
 </head>
 <body>
   <div>
     <h1>Hello 👋</h1>
     <p>If you can see this, your GitHub repo is connected to Vercel.</p>
+    <div id="supabase-status">Checking Supabase connection…</div>
   </div>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    const supabaseUrl = "https://kzoxttrsefspxzhpkgwz.supabase.co";
+    const supabaseKey = "sb_publishable_guQX_dW6-jir40myg94W-A_uzJeb7gU";
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const statusEl = document.getElementById("supabase-status");
+
+    const { data, error } = await supabase
+      .from("connection_test")
+      .select("message")
+      .limit(1)
+      .single();
+
+    if (error) {
+      statusEl.textContent = `Supabase connection failed: ${error.message}`;
+      statusEl.classList.add("error");
+    } else {
+      statusEl.textContent = data.message;
+    }
+  </script>
 </body>
 </html>
