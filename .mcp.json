@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ghl": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@drausal/gohighlevel-mcp@1.0.0"],
+      "env": {
+        "BEARER_TOKEN_BEARERAUTH": "${GHL_API_KEY}",
+        "BEARER_TOKEN_BEARER": "${GHL_API_KEY}"
+      }
+    }
+  }
+}
